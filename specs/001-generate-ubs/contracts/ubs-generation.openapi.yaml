@@ -1,0 +1,120 @@
+openapi: 3.0.3
+info:
+  title: UBS Generation
+  version: 0.1.0
+paths:
+  /ubs/generations:
+    post:
+      summary: Generate a UBS draft from source artifacts
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GenerationRequest'
+      responses:
+        '200':
+          description: Generation outcome
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationOutcome'
+  /ubs/generations/{request_id}:
+    get:
+      summary: Retrieve generation log entry
+      parameters:
+        - in: path
+          name: request_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Generation log entry
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GenerationLog'
+components:
+  schemas:
+    SourceArtifact:
+      type: object
+      required: [artifact_id, artifact_type]
+      properties:
+        artifact_id:
+          type: string
+        artifact_type:
+          type: string
+        title:
+          type: string
+        location_ref:
+          type: string
+        excerpt:
+          type: string
+    GenerationRequest:
+      type: object
+      required: [behavior_name, domain, artifact_refs]
+      properties:
+        behavior_name:
+          type: string
+        domain:
+          type: string
+        requester:
+          type: string
+        requested_at:
+          type: string
+        artifact_refs:
+          type: array
+          items:
+            $ref: '#/components/schemas/SourceArtifact'
+    GenerationOutcome:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+          description: SUCCESS means a draft with no missing required information; INCOMPLETE means a draft with gaps recorded as Labeled Assumptions (TODO Question); BLOCKED means generation cannot proceed due to invalid scope, conflicting artifacts, or multiple primary behaviors.
+          enum: [SUCCESS, INCOMPLETE, BLOCKED]
+        draft_location_ref:
+          type: string
+          description: Domain location/path for the generated UBS draft when status is SUCCESS or INCOMPLETE, created as a versioned artifact alongside the codebase.
+        labeled_assumptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/LabeledAssumption'
+          description: Present for INCOMPLETE outcomes and used when UI-only inputs require explicit Labeled Assumptions (TODO Question).
+        forbidden_outcomes:
+          type: array
+          items:
+            type: string
+          description: Forbidden outcomes captured from source artifacts; omitted if none are present.
+        block_reason:
+          type: string
+          description: Reason for BLOCKED outcome, including invalid scope, conflicting artifacts, or unidentifiable behavior from UI-only input.
+    GenerationLog:
+      type: object
+      required: [request, outcome]
+      description: Audit record capturing the generation request and resulting outcome.
+      properties:
+        request:
+          $ref: '#/components/schemas/GenerationRequest'
+        outcome:
+          $ref: '#/components/schemas/GenerationOutcome'
+    LabeledAssumption:
+      type: object
+      required: [assumption_id, todo_question, status]
+      properties:
+        assumption_id:
+          type: string
+        rule_id:
+          type: string
+        todo_question:
+          type: string
+        status:
+          type: string
+          enum: [OPEN, RESOLVED, REMOVED]
+
+# Validation Notes: 2026-02-07. Checked outcome semantics and payload fields; PASS. Rationale: schema defines explicit status meanings and preserves labeled assumptions without altering structure.
+# Validation Notes: 2026-02-07. Checked draft location field semantics; PASS. Rationale: draft location/path is explicit and tied to versioned artifacts.
+# Validation Notes: 2026-02-07. Checked forbidden outcome handling; PASS. Rationale: forbidden outcomes are included only when present and never invented.
+# Validation Notes: 2026-02-07. Checked INCOMPLETE/BLOCKED handling for UI-only inputs; PASS. Rationale: labeled assumptions and block reasons are explicit without changing schema behavior.
