@@ -1,8 +1,11 @@
-const { sha256File, sha256 } = require("../lib/fs");
+const { sha256File, sha256, pathExists } = require("../lib/fs");
 const path = require("path");
 
 async function diffAsset(baseDir, asset) {
   const targetPath = path.join(baseDir, asset.relativePath);
+  if (!(await pathExists(targetPath))) {
+    return null;
+  }
   const expectedChecksum = sha256(asset.content);
   const actualChecksum = await sha256File(targetPath);
 

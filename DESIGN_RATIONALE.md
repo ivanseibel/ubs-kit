@@ -59,6 +59,7 @@ All UBS artifacts live in VS Code-native locations: `.github/agents` and
 * Makes agent and skill discovery automatic for users and automation.
 * Allows tooling to reason about UBS artifacts deterministically.
 * Creates a clear boundary between behavioral governance and application code.
+* Detects legacy .ubs content without modifying it.
 
 Native VS Code locations were chosen over bespoke paths to preserve integration
 and reduce friction.

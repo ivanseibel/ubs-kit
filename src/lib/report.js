@@ -20,7 +20,15 @@ function formatValidationReport(issues) {
   return lines.join("\n");
 }
 
+function formatLegacyReport(legacyUbsDetected) {
+  if (!legacyUbsDetected) {
+    return "";
+  }
+  return "Legacy .ubs directory detected. It was not modified.";
+}
+
 module.exports = {
   formatConflictReport,
-  formatValidationReport
+  formatValidationReport,
+  formatLegacyReport
 };

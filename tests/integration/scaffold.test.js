@@ -25,7 +25,7 @@ async function listFiles(baseDir) {
   return files;
 }
 
-test("scaffold writes canonical assets to .ubs", async () => {
+test("scaffold writes canonical assets to .github", async () => {
   const tempDir = await createTempDir();
   const result = await scaffold({ baseDir: tempDir, dryRun: false });
   const manifest = loadAssetManifest();
@@ -33,7 +33,7 @@ test("scaffold writes canonical assets to .ubs", async () => {
   assert.equal(result.conflicts.length, 0);
   assert.equal(result.writtenFiles.length, manifest.assets.length);
 
-  const createdFiles = await listFiles(path.join(tempDir, ".ubs"));
+  const createdFiles = await listFiles(path.join(tempDir, ".github"));
   assert.equal(createdFiles.length, manifest.assets.length);
 });
 
