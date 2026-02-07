@@ -1,11 +1,6 @@
-# UBS Kit
+# Quickstart: Workspace-Native Governance Scaffold
 
-UBS Kit is a Node.js CLI that scaffolds and validates a UBS governance layer in
-an existing repository. It creates VS Code-native agents and skills under
-.github/agents and .github/skills, enforces UBS structure, and prevents
-destructive changes by default.
-
-## Requirements
+## Prerequisites
 
 - Node.js 20+
 - An existing repository with write access
@@ -29,15 +24,17 @@ node src/cli/create-ubs-kit.js
 node src/cli/create-ubs-kit.js validate
 ```
 
-## Options
+## Common options
 
 - `--dry-run`: Preview without writing files
 - `--force`: Overwrite conflicts explicitly
 - `--base-dir <path>`: Override repository root
 - `--domains <list>`: Limit scaffolding to specific domains
 
-## Behavior
+## Expected behavior
 
+- The scaffold writes only to .github/agents and .github/skills.
+- The scaffold includes assistants for drafting and reviewing UBS files.
 - If any conflict is detected and `--force` is not supplied, the command exits
   non-zero and writes no files.
 - Validation reports all detected violations and exits non-zero if any exist.

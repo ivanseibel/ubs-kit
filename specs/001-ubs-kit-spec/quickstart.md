@@ -11,7 +11,7 @@
 npm install
 ```
 
-## Scaffold .ubs/
+## Scaffold agents and skills
 
 ```bash
 node src/cli/create-ubs-kit.js --dry-run

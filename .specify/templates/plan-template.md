@@ -34,6 +34,7 @@
 - Product Over Process Artifacts: executable tooling, enforceable validation, usable assets.
 - UBS Is the Behavioral Authority: UBS governs behavior; implementation conforms.
 - Canonical UBS Structure Is Mandatory: 11 sections, fixed order, enforced by validation.
+- VS Code Native Layout Is Mandatory: agents in .github/agents, skills in .github/skills.
 - Atomicity: one UBS file governs one primary behavior.
 - No Silent Assumptions: ambiguities tagged as Assumption with TODO questions.
 - AI Is a First-Class Consumer: no inference required for rules or outcomes.

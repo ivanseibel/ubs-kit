@@ -11,11 +11,20 @@ async function createTempDir() {
 
 test("scaffold detects conflicts and does not write", async () => {
   const tempDir = await createTempDir();
-  const conflictPath = path.join(tempDir, ".ubs", "template", "ubs-template.md");
+  const conflictPath = path.join(
+    tempDir,
+    ".github",
+    "skills",
+    "template",
+    "ubs-template.md"
+  );
   await fs.mkdir(path.dirname(conflictPath), { recursive: true });
   await fs.writeFile(conflictPath, "custom", "utf8");
+
+  await fs.mkdir(path.join(tempDir, ".ubs"), { recursive: true });
 
   const result = await scaffold({ baseDir: tempDir, dryRun: false, force: false });
   assert.ok(result.conflicts.length > 0);
   assert.equal(result.writtenFiles.length, 0);
+  assert.equal(result.legacyUbsDetected, true);
 });

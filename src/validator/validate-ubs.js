@@ -1,27 +1,7 @@
 const fs = require("fs/promises");
 const path = require("path");
 const { readText } = require("../lib/fs");
-const { CANONICAL_SECTIONS, RULES } = require("./rules");
-
-async function listUbsFiles(rootDir) {
-  const files = [];
-  async function walk(current) {
-    const entries = await fs.readdir(current, { withFileTypes: true });
-    for (const entry of entries) {
-      const fullPath = path.join(current, entry.name);
-      if (entry.isDirectory()) {
-        await walk(fullPath);
-      } else if (entry.isFile() && entry.name.endsWith(".md")) {
-        files.push(fullPath);
-      }
-    }
-  }
-
-  if (await exists(rootDir)) {
-    await walk(rootDir);
-  }
-  return files;
-}
+const { CANONICAL_SECTIONS, RULES, REQUIRED_PATHS, UBS_FILE_PATHS } = require("./rules");
 
 async function exists(targetPath) {
   try {
@@ -125,11 +105,36 @@ async function validateFile(filePath) {
   return issues;
 }
 
+async function validateRequiredPaths(baseDir, issues) {
+  for (const relativePath of REQUIRED_PATHS) {
+    const fullPath = path.join(baseDir, relativePath);
+    if (!(await exists(fullPath))) {
+      issues.push({
+        filePath: fullPath,
+        ruleId: RULES.REQUIRED_PATH_MISSING,
+        message: `Missing required path: ${relativePath}.`
+      });
+    }
+  }
+}
+
+async function listUbsFiles(baseDir) {
+  const files = [];
+  for (const relativePath of UBS_FILE_PATHS) {
+    const fullPath = path.join(baseDir, relativePath);
+    if (await exists(fullPath)) {
+      files.push(fullPath);
+    }
+  }
+  return files;
+}
+
 async function validateUbs({ baseDir }) {
-  const ubsDir = path.join(baseDir, ".ubs");
-  const files = await listUbsFiles(ubsDir);
   const issues = [];
 
+  await validateRequiredPaths(baseDir, issues);
+
+  const files = await listUbsFiles(baseDir);
   for (const filePath of files) {
     const fileIssues = await validateFile(filePath);
     issues.push(...fileIssues);

@@ -3,7 +3,7 @@
 const path = require("path");
 const { parseArgs } = require("util");
 const { findRepoRoot } = require("../lib/fs");
-const { formatConflictReport, formatValidationReport } = require("../lib/report");
+const { formatConflictReport, formatValidationReport, formatLegacyReport } = require("../lib/report");
 const { scaffold } = require("../scaffold/scaffold");
 const { validateUbs } = require("../validator/validate-ubs");
 
@@ -46,6 +46,13 @@ async function main() {
     force: parsedArgs.values.force,
     domains: parsedArgs.values.domains
   });
+
+  console.log("Scaffold targets: .github/agents and .github/skills");
+
+  const legacyReport = formatLegacyReport(result.legacyUbsDetected);
+  if (legacyReport) {
+    console.warn(legacyReport);
+  }
 
   if (result.conflicts && result.conflicts.length) {
     console.error(formatConflictReport(result.conflicts));
