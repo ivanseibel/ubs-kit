@@ -5,6 +5,12 @@
 **Status**: Draft  
 **Input**: User description: "$ARGUMENTS"
 
+**Constitution reminders**: UBS is the behavioral authority. Requirements MUST
+describe observable behavior and remain stack-agnostic. Unknowns MUST be tagged
+as Assumption with a TODO question. UBS structure MUST be canonical (11
+sections, fixed order), English-only, and enforceable by validation. UI
+descriptions are non-authoritative.
+
 ## User Scenarios & Testing *(mandatory)*
 
 <!--

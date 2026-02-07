@@ -1,8 +1,8 @@
-# Specification Quality Checklist: Generate a UBS from Source Artifacts
+# Specification Quality Checklist: UBS Kit Governance Layer
 
 **Purpose**: Validate specification completeness and quality before proceeding to planning
 **Created**: 2026-02-07
-**Feature**: [specs/001-generate-ubs/spec.md](specs/001-generate-ubs/spec.md)
+**Feature**: [specs/001-ubs-kit-spec/spec.md](specs/001-ubs-kit-spec/spec.md)
 
 ## Content Quality
 
@@ -32,8 +32,3 @@
 ## Notes
 
 - Items marked incomplete require spec updates before /speckit.clarify or /speckit.plan
-
-## Validation Notes
-
-- 2026-02-07: Checked checklist baseline; PASS. Rationale: all items are marked complete and align with current spec scope.
-- 2026-02-07: Checked checklist confirmations after task updates; PASS. Rationale: checklist remains complete and consistent with the current tasks.

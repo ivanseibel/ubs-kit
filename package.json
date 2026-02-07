@@ -1,0 +1,16 @@
+{
+  "name": "ubs-kit",
+  "version": "0.1.0",
+  "description": "CLI for scaffolding and validating UBS governance layers",
+  "license": "MIT",
+  "private": true,
+  "bin": {
+    "create-ubs-kit": "src/cli/create-ubs-kit.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test"
+  }
+}

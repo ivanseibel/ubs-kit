@@ -1,13 +1,17 @@
-# Implementation Plan: [FEATURE]
+# Implementation Plan: UBS Kit Governance Layer
 
-**Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
-**Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
+**Branch**: `001-ubs-kit-spec` | **Date**: 2026-02-07 | **Spec**: [specs/001-ubs-kit-spec/spec.md](specs/001-ubs-kit-spec/spec.md)
+**Input**: Feature specification from `/specs/001-ubs-kit-spec/spec.md`
 
 **Note**: This template is filled in by the `/speckit.plan` command. See `.specify/templates/commands/plan.md` for the execution workflow.
 
 ## Summary
 
-[Extract from feature spec: primary requirement + technical approach from research]
+Build a Node.js 20 CLI named `create-ubs-kit` that scaffolds a canonical .ubs/
+governance layer, validates UBS structure deterministically, and supports safe
+re-runs with explicit conflict handling. Implementation uses Node.js standard
+libraries for filesystem operations and argument parsing, with minimal tests via
+the built-in `node:test` runner.
 
 ## Technical Context
 
@@ -17,15 +21,15 @@
   the iteration process.
 -->
 
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]  
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]  
-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]  
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]  
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
-**Project Type**: [single/web/mobile - determines source structure]  
-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
-**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
+**Language/Version**: Node.js 20 (JavaScript)  
+**Primary Dependencies**: Node.js standard library only (no external runtime deps)  
+**Storage**: Local filesystem under repository root  
+**Testing**: `node:test` with `assert/strict`  
+**Target Platform**: Cross-platform CLI (macOS, Linux, Windows)  
+**Project Type**: single  
+**Performance Goals**: Scaffold/validate a typical repo in under 2 seconds  
+**Constraints**: Non-destructive by default; no partial updates on conflict; English-only canonical assets  
+**Scale/Scope**: Single repo, dozens to hundreds of UBS files
 
 ## Constitution Check
 
@@ -41,6 +45,8 @@
 - Enforceability Over Readability: only rules that can be validated belong in UBS.
 - Non-Destructive by Default: scaffolding safe; replacement requires explicit action.
 - Minimalism With Intent: include only what is required to scaffold, validate, demonstrate.
+
+**Gate Status**: Pass
 
 ## Project Structure
 
@@ -65,49 +71,47 @@ specs/[###-feature]/
 -->
 
 ```text
-# [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
 src/
-├── models/
-├── services/
 ├── cli/
+│   └── create-ubs-kit.js
+├── scaffold/
+│   ├── asset-manifest.js
+│   ├── scaffold.js
+│   └── diff.js
+├── validator/
+│   ├── rules.js
+│   └── validate-ubs.js
+├── assets/
+│   ├── template/
+│   ├── guidelines/
+│   ├── checklist/
+│   ├── agents/
+│   └── examples/
 └── lib/
+  ├── fs.js
+  └── report.js
 
 tests/
 ├── contract/
 ├── integration/
 └── unit/
-
-# [REMOVE IF UNUSED] Option 2: Web application (when "frontend" + "backend" detected)
-backend/
-├── src/
-│   ├── models/
-│   ├── services/
-│   └── api/
-└── tests/
-
-frontend/
-├── src/
-│   ├── components/
-│   ├── pages/
-│   └── services/
-└── tests/
-
-# [REMOVE IF UNUSED] Option 3: Mobile + API (when "iOS/Android" detected)
-api/
-└── [same as backend above]
-
-ios/ or android/
-└── [platform-specific structure: feature modules, UI flows, platform tests]
 ```
 
-**Structure Decision**: [Document the selected structure and reference the real
-directories captured above]
+**Structure Decision**: Single-project layout with `src/` and `tests/`,
+separating CLI, scaffolding, validator, and canonical assets.
 
 ## Complexity Tracking
 
-> **Fill ONLY if Constitution Check has violations that must be justified**
+No constitution violations required.
 
-| Violation | Why Needed | Simpler Alternative Rejected Because |
-|-----------|------------|-------------------------------------|
-| [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
-| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
+## Phase 0: Research
+
+- Output: [specs/001-ubs-kit-spec/research.md](specs/001-ubs-kit-spec/research.md)
+
+## Phase 1: Design
+
+- Data model: [specs/001-ubs-kit-spec/data-model.md](specs/001-ubs-kit-spec/data-model.md)
+- Contracts: [specs/001-ubs-kit-spec/contracts/ubs-kit.openapi.yaml](specs/001-ubs-kit-spec/contracts/ubs-kit.openapi.yaml)
+- Quickstart: [specs/001-ubs-kit-spec/quickstart.md](specs/001-ubs-kit-spec/quickstart.md)
+
+**Constitution Re-check**: Pass

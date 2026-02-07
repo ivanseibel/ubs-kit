@@ -4,7 +4,7 @@ Auto-generated from all feature plans. Last updated: 2026-02-07
 
 ## Active Technologies
 
-- N/A (spec-only repository; no runtime defined) + N/A (no build manifests found) (001-generate-ubs)
+- Node.js 20 (JavaScript) + Node.js standard library only (no external runtime deps) (001-ubs-kit-spec)
 
 ## Project Structure
 
@@ -15,15 +15,15 @@ tests/
 
 ## Commands
 
-# Add commands for N/A (spec-only repository; no runtime defined)
+npm test && npm run lint
 
 ## Code Style
 
-N/A (spec-only repository; no runtime defined): Follow standard conventions
+Node.js 20 (JavaScript): Follow standard conventions
 
 ## Recent Changes
 
-- 001-generate-ubs: Added N/A (spec-only repository; no runtime defined) + N/A (no build manifests found)
+- 001-ubs-kit-spec: Added Node.js 20 (JavaScript) + Node.js standard library only (no external runtime deps)
 
 <!-- MANUAL ADDITIONS START -->
 <!-- MANUAL ADDITIONS END -->

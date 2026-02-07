@@ -12,6 +12,12 @@ description: "Task list template for feature implementation"
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
+**Constitution reminders**: Tasks MUST produce concrete code or artifact changes
+toward a runnable CLI outcome. Non-destructive defaults (`--dry-run`, `--force`)
+and validator failure behavior MUST be planned when relevant. UBS structure
+MUST remain canonical (11 sections, fixed order), English-only, and enforceable
+by validation. Avoid convenience shortcuts that reduce durability.
+
 ## Format: `[ID] [P?] [Story] Description`
 
 - **[P]**: Can run in parallel (different files, no dependencies)
