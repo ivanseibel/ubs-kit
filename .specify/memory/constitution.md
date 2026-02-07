@@ -1,33 +1,26 @@
 <!--
 Sync Impact Report
-- Version change: 2.0.1 -> 2.1.0
+- Version change: 2.1.0 -> 3.0.0
 - Modified principles:
-	- Behavior First (reframed to be UBS authority-aligned)
-	- Atomicity (non-negotiable emphasis)
-	- No Silent Assumptions (kept, clarified enforceability)
+  - UBS Is the Behavioral Authority (scoped to agents/skills outputs)
+  - Canonical UBS Structure Is Mandatory (aligned to skills packaging)
+  - AI Is a First-Class Consumer (explicit skills/agents consumption)
+  - Non-Destructive by Default (VS Code-native locations)
 - Added principles:
-	- Product Over Process Artifacts
-	- UBS Is the Behavioral Authority
-	- Canonical UBS Structure Is Mandatory
-	- AI Is a First-Class Consumer
-	- English Is the Only Canonical Language
-	- Enforceability Over Readability
-	- Non-Destructive by Default
-	- Minimalism With Intent
-- Removed principles:
-	- Preserve Source Truth
-	- No Semantic Drift
-	- Executable Consequences
-	- Durability Over Convenience
+  - VS Code Native Layout Is Mandatory
+- Removed principles: None
 - Added sections: None
 - Removed sections: None
 - Templates requiring updates:
-	- ✅ .specify/templates/plan-template.md
-	- ✅ .specify/templates/spec-template.md
-	- ✅ .specify/templates/tasks-template.md
-	- ⚠ .specify/templates/commands/*.md (directory missing; verify none required)
+  - ✅ .specify/templates/plan-template.md
+  - ✅ .specify/templates/spec-template.md
+  - ✅ .specify/templates/tasks-template.md
+  - ⚠ .specify/templates/commands/*.md (directory missing; verify none required)
+  - ✅ README.md
+	- ✅ DESIGN_RATIONALE.md
+	- ✅ specs/001-ubs-kit-spec/quickstart.md
 - Follow-up TODOs:
-	- TODO(RATIFICATION_DATE): original adoption date unknown
+  - TODO(RATIFICATION_DATE): original adoption date unknown
 -->
 # UBS Kit Constitution
 
@@ -36,9 +29,9 @@ Sync Impact Report
 UBS Kit exists to produce a runnable, enforceable UBS setup that enables
 explicit, durable, and machine-consumable behavior governance inside real
 codebases. The project produces a Node.js (>= 20) CLI named create-ubs-kit that
-scaffolds a complete, isolated .ubs/ directory into any existing repository.
-The scaffolded artifacts define, constrain, validate, and enforce UBS usage so
-that documented behavior governs real system evolution, not UI narratives or
+scaffolds VS Code-native agents and skills into any existing repository. The
+scaffolded artifacts define, constrain, validate, and enforce UBS usage so that
+documented behavior governs real system evolution, not UI narratives or
 informal assumptions.
 
 UBS Kit is not documentation, guidance, or examples alone. Valid UBS artifacts
@@ -46,17 +39,17 @@ enable progress. Invalid or missing UBS artifacts block progress.
 
 ## Scope
 
-UBS Kit delivers a production-ready CLI and a canonical UBS workspace. The
-scope includes:
+UBS Kit delivers a production-ready CLI and a canonical UBS workspace aligned
+to VS Code's agents and skills. The scope includes:
 
-- A Node.js CLI that scaffolds .ubs/ at the repository root by default.
-- Canonical UBS artifacts written in English only.
+- A Node.js CLI that scaffolds .github/agents and .github/skills by default.
+- Canonical UBS artifacts written in English only, packaged as skills.
 - A UBS validator that enforces structure and identifiers and exits non-zero
-	on failure.
+  on failure.
 - Minimal automated tests that verify scaffold correctness and validator
-	behavior.
+  behavior.
 - Documentation required to install, run, and validate UBS Kit in a real
-	repository.
+  repository.
 
 Specs, plans, and tasks are process artifacts only. They are inputs to
 development, not part of the shipped product.
@@ -71,6 +64,7 @@ UBS Kit does not:
 - Invent forbidden outcomes or missing behavior.
 - Replace human judgment in authoring UBS artifacts.
 - Enforce runtime business logic directly inside application code.
+- Require manual file moves or copying to integrate with VS Code.
 
 ## Core Principles
 
@@ -92,6 +86,13 @@ Identity, Business Context, Actors, Initial State (Given), Triggering Event
 Invariants, Minimum Observability, Notes for AI. Deviation is invalid and MUST
 be rejected by validation. Rationale: structural consistency enables reliable
 validation and automation.
+
+### VS Code Native Layout Is Mandatory
+All shipped agents MUST live under .github/agents and all shipped skills MUST
+live under .github/skills. UBS assets MUST be packaged as skills and referenced
+by agents; alternate layouts are invalid and MUST be rejected by validation.
+Rationale: native layouts eliminate manual copying and enable VS Code
+integration.
 
 ### Atomicity
 One UBS file governs exactly one primary behavior. Compound behaviors MUST be
@@ -135,13 +136,14 @@ secondary. Rationale: focused scope protects maintainability.
 
 - Language: all canonical UBS artifacts are English only.
 - Structure: UBS files MUST follow the canonical UBS template with exactly
-	11 sections in the mandated order.
-- Location: all UBS artifacts live under .ubs/ unless explicitly documented
-	otherwise.
+- 11 sections in the mandated order.
+- Location: agents live under .github/agents and skills live under
+  .github/skills. UBS artifacts MUST be packaged in skills unless explicitly
+  documented otherwise.
 - Identifiers: UBS files and sections MUST use the required ID format enforced
-	by the validator.
+  by the validator.
 - Examples: shipped examples represent valid, minimal, real UBS files, not
-	placeholders.
+  placeholders.
 - Separation of concerns: guidelines, templates, prompts, examples, and
 	validators are distinct artifacts with clear roles.
 
@@ -162,6 +164,8 @@ UBS Kit is acceptable only if:
 - The CLI runs on Node.js >= 20 without modification.
 - Scaffolding is non-destructive by default and supports --force, --dry-run,
 	--base-dir, and --domains.
+- Scaffolding produces VS Code-native agents and skills without requiring
+  manual file moves.
 - The validator reliably fails on structural or ID violations and exits with a
 	non-zero status.
 - The validator is intentionally minimal by default and enforces only
@@ -182,16 +186,14 @@ outputs outside any spec or planning folders:
 	- Argument parsing and flags: --force, --dry-run, --base-dir, --domains
 	- Deterministic scaffold logic
 - Canonical UBS Assets
-	- .ubs/template/ containing the canonical UBS template with exactly 11
-		sections
-	- .ubs/guidelines/ containing UBS guidelines and a quality checklist aligned
+	- .github/skills/ containing a UBS template skill with exactly 11 sections
+	- .github/skills/ containing UBS guidelines and a quality checklist aligned
 		with the UBS Framework
-	- .ubs/agents/ containing agent resources and prompts for UBS usage
-	- .ubs/examples/ containing at least 3 valid UBS example files
+	- .github/skills/ containing at least 3 valid UBS example files
+	- .github/agents/ containing agent resources and prompts for UBS usage
 - Validator
-	- .ubs/validator/ with a runnable validator that verifies required headings,
-		verifies UBS ID format, exits non-zero on any failure, and emits clear
-		English-only messages
+	- Runnable validator that verifies required headings, verifies UBS ID format,
+		exits non-zero on any failure, and emits clear English-only messages
 - Tests
 	- Automated tests that verify correct scaffold output and validator pass/fail
 		behavior and run in a clean environment
@@ -215,4 +217,4 @@ outputs outside any spec or planning folders:
 - Compliance is verified in reviews; changes that violate principles MUST NOT
 	be merged.
 
-**Version**: 2.1.0 | **Ratified**: TODO(RATIFICATION_DATE): original adoption date unknown | **Last Amended**: 2026-02-07
+**Version**: 3.0.0 | **Ratified**: TODO(RATIFICATION_DATE): original adoption date unknown | **Last Amended**: 2026-02-07

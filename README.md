@@ -1,8 +1,9 @@
 # UBS Kit
 
 UBS Kit is a Node.js CLI that scaffolds and validates a UBS governance layer in
-an existing repository. It creates a canonical .ubs/ directory, enforces UBS
-structure, and prevents destructive changes by default.
+an existing repository. It creates VS Code-native agents and skills under
+.github/agents and .github/skills, enforces UBS structure, and prevents
+destructive changes by default.
 
 ## Requirements
 
@@ -15,7 +16,7 @@ structure, and prevents destructive changes by default.
 npm install
 ```
 
-## Scaffold .ubs/
+## Scaffold agents and skills
 
 ```bash
 node src/cli/create-ubs-kit.js --dry-run

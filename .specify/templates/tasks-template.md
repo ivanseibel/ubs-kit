@@ -16,7 +16,9 @@ description: "Task list template for feature implementation"
 toward a runnable CLI outcome. Non-destructive defaults (`--dry-run`, `--force`)
 and validator failure behavior MUST be planned when relevant. UBS structure
 MUST remain canonical (11 sections, fixed order), English-only, and enforceable
-by validation. Avoid convenience shortcuts that reduce durability.
+by validation. Agents and skills MUST live in VS Code-native locations
+(.github/agents, .github/skills). Avoid convenience shortcuts that reduce
+durability.
 
 ## Format: `[ID] [P?] [Story] Description`
 

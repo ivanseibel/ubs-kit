@@ -8,8 +8,9 @@
 **Constitution reminders**: UBS is the behavioral authority. Requirements MUST
 describe observable behavior and remain stack-agnostic. Unknowns MUST be tagged
 as Assumption with a TODO question. UBS structure MUST be canonical (11
-sections, fixed order), English-only, and enforceable by validation. UI
-descriptions are non-authoritative.
+sections, fixed order), English-only, and enforceable by validation. Agents and
+skills MUST live in VS Code-native locations (.github/agents, .github/skills).
+UI descriptions are non-authoritative.
 
 ## User Scenarios & Testing *(mandatory)*
 

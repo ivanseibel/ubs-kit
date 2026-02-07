@@ -46,20 +46,22 @@ A library would require runtime integration. A service would introduce unnecessa
 
 ---
 
-## Why `.ubs/` as an Isolated Directory
+## Why VS Code-Native Agents and Skills
 
 ### Decision
 
-All UBS artifacts live under a single, isolated directory: `.ubs/`.
+All UBS artifacts live in VS Code-native locations: `.github/agents` and
+`.github/skills`.
 
 ### Rationale
 
-* Prevents polluting existing `docs/`, `scripts/`, or source directories.
-* Makes UBS adoption reversible by deleting one directory.
+* Integrates with VS Code without manual copying or relocation.
+* Makes agent and skill discovery automatic for users and automation.
 * Allows tooling to reason about UBS artifacts deterministically.
 * Creates a clear boundary between behavioral governance and application code.
 
-Isolation was chosen over convenience to preserve long-term clarity.
+Native VS Code locations were chosen over bespoke paths to preserve integration
+and reduce friction.
 
 ---
 
