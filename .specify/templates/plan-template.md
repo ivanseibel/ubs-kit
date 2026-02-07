@@ -31,7 +31,12 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- Behavior First: requirements/tests describe observable behavior only.
+- State-Oriented Thinking: states, events, guards, and transitions are explicit.
+- Atomicity: each UBS governs one behavior; journeys are composed.
+- No Silent Assumptions: unknowns are tagged as assumptions or TODOs.
+- AI as a First-Class Consumer: forbidden outcomes are explicit and enforced.
+- Living Documentation: plan includes UBS updates for any behavior change.
 
 ## Project Structure
 
